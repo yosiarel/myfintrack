@@ -61,26 +61,16 @@ const updateCardTransforms = () => {
 
   isUpdatingRef.value = true;
 
-  // Use window scroll, relative to the container
   const rect = scroller.getBoundingClientRect();
   const containerTop = rect.top + window.scrollY;
-  // We want the effect to start when the container enters view or simply use global scroll relative to container start
-  // Actually, mimicking "sticky" means we compare scrollTop to element positions.
   
-  // Calculate effective scroll position within the container:
-  // How many pixels have we scrolled PAST the top of the container?
-  // If we are above container, relativeScroll < 0
   const relativeScroll = window.scrollY - containerTop;
-  const scrollTop = Math.max(0, relativeScroll + window.innerHeight * 0.2); // Start effect slightly earlier or exactly at top
+  const scrollTop = Math.max(0, relativeScroll + window.innerHeight * 0.2); 
 
-  // Use scroller height for calculations?
-  // The original code used scroller.clientHeight which was the viewport height (since it was h-full fixed).
-  // Now we use window.innerHeight.
   const containerHeight = window.innerHeight;
   
   const stackPositionPx = parsePercentage(props.stackPosition, containerHeight);
   const scaleEndPositionPx = parsePercentage(props.scaleEndPosition, containerHeight);
-  // End element is inside the container, so its offsetTop is relative to container
   const endElement = scroller.querySelector('.scroll-stack-end') as HTMLElement;
   const endElementTop = endElement ? endElement.offsetTop : 0;
 
@@ -100,18 +90,12 @@ const updateCardTransforms = () => {
 
     let blur = 0;
     if (props.blurAmount) {
-     // ... (blur logic logic omitted for brevity, keeping existing if possible or simplifying)
     }
 
     let translateY = 0;
     const isPinned = scrollTop >= pinStart && scrollTop <= pinEnd;
 
     if (isPinned) {
-      // Simulate sticky: keep it at stackPositionPx from top of VIEWPORT
-      // Since 'scrollTop' is relative to container, and 'translateY' is relative to card's original position.
-      // Original Y = cardTop.
-      // Target Y relative to container = scrollTop + stackPositionPx + offset
-      // translateY = Target Y - Original Y
       translateY = scrollTop - cardTop + stackPositionPx + props.itemStackDistance * i;
     } else if (scrollTop > pinEnd) {
       translateY = pinEnd - cardTop + stackPositionPx + props.itemStackDistance * i;
@@ -152,7 +136,7 @@ const handleScroll = () => {
 
 const setupScroll = () => {
   window.addEventListener('scroll', handleScroll, { passive: true });
-  handleScroll(); // Initial update
+  handleScroll();
 };
 
 const cleanupScroll = () => {
