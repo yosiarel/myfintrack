@@ -71,7 +71,6 @@ public class AuthenticationService {
 
             log.info("User authenticated successfully: {}", request.getEmail());
 
-            // If authentication successful, reset failed attempts
             if (user.getFailedAttempts() > 0) {
                 user.setFailedAttempts(0);
                 user.setLockTime(null);

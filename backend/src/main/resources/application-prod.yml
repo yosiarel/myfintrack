@@ -4,19 +4,24 @@
 
 spring:
   datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    # Railway provides DATABASE_URL in format: postgresql://user:password@host:port/dbname
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/myfintrack}
+    driver-class-name: org.postgresql.Driver
 
     hikari:
       maximum-pool-size: 20
       minimum-idle: 10
+      connection-timeout: 30000
+      idle-timeout: 600000
 
   jpa:
+    hibernate:
+      ddl-auto: update
     show-sql: false
     properties:
       hibernate:
         format_sql: false
+        dialect: org.hibernate.dialect.PostgreSQLDialect
 
 server:
   port: ${SERVER_PORT:8080}
