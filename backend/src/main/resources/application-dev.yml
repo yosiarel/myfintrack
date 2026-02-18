@@ -1,0 +1,24 @@
+# ================================================
+# Development Profile Configuration
+# ================================================
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/myfintrack
+    username: postgres
+    password: yosia0610
+
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 8080
+
+logging:
+  level:
+    root: INFO
+    com.myfintrack: DEBUG
+    org.springframework.security: DEBUG

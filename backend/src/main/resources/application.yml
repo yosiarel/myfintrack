@@ -1,0 +1,82 @@
+# ================================================
+# MyFinTrack Application Configuration
+# ================================================
+
+spring:
+  application:
+    name: myfintrack
+  profiles:
+    active: dev
+
+  # ================================================
+  # DATABASE CONFIGURATION
+  # ================================================
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/myfintrack}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 20000
+      idle-timeout: 300000
+      max-lifetime: 1200000
+
+  # ================================================
+  # JPA / HIBERNATE CONFIGURATION
+  # ================================================
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        use_sql_comments: true
+        jdbc:
+          batch_size: 20
+        order_inserts: true
+        order_updates: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  # ================================================
+  # SQL INITIALIZATION
+  # ================================================
+  sql:
+    init:
+      mode: never
+
+# ================================================
+# JWT CONFIGURATION
+# ================================================
+jwt:
+  secret: ${JWT_SECRET:MyFinTrack2026SecretKeyForJWTTokenGenerationPleaseChangeThisInProduction}
+  expiration: 86400000 # 1 day
+  refresh-expiration: 604800000 # 7 days
+
+# ================================================
+# SERVER CONFIGURATION
+# ================================================
+server:
+  port: ${PORT:8080}
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: on_param
+    include-exception: false
+
+# ================================================
+# LOGGING CONFIGURATION
+# ================================================
+logging:
+  level:
+    root: INFO
+    com.myfintrack: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
