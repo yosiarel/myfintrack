@@ -69,6 +69,8 @@ const clearTimeoutIfNeeded = () => {
 
 const executeTypingAnimation = () => {
   const currentText = textArray.value[currentTextIndex.value]
+  if (!currentText) return
+  
   const processedText = props.reverseMode ? currentText.split('').reverse().join('') : currentText
 
   if (isDeleting.value) {
@@ -168,7 +170,7 @@ onBeforeUnmount(() => {
       ref="cursorRef"
       :class="`ml-1 inline-block opacity-100 ${
         hideCursorWhileTyping &&
-        (currentCharIndex < textArray[currentTextIndex].length || isDeleting)
+        (currentCharIndex < (textArray[currentTextIndex]?.length || 0) || isDeleting)
           ? 'hidden'
           : ''
       } ${cursorClassName}`"
