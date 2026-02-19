@@ -78,7 +78,10 @@ const executeTypingAnimation = () => {
       isDeleting.value = false
       if (currentTextIndex.value === textArray.value.length - 1 && !props.loop) return
 
-      props.onSentenceComplete?.(textArray.value[currentTextIndex.value], currentTextIndex.value)
+      const completedText = textArray.value[currentTextIndex.value]
+      if (completedText) {
+        props.onSentenceComplete?.(completedText, currentTextIndex.value)
+      }
 
       currentTextIndex.value = (currentTextIndex.value + 1) % textArray.value.length
       currentCharIndex.value = 0
