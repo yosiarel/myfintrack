@@ -9,16 +9,12 @@ interface User {
 }
 
 export const useAuthStore = defineStore('auth', () => {
-  // State
   const token = ref<string | null>(localStorage.getItem('auth_token'))
   const user = ref<User | null>(JSON.parse(localStorage.getItem('user') || 'null'))
   const loading = ref(false)
   const error = ref<string | null>(null)
-
-  // Getters
   const isAuthenticated = computed(() => !!token.value)
 
-  // Actions
   async function login(credentials: LoginRequest) {
     loading.value = true
     error.value = null
@@ -27,7 +23,6 @@ export const useAuthStore = defineStore('auth', () => {
       const response = await authApi.login(credentials)
       
       if (response.success) {
-        // Save token and user
         token.value = response.data.accessToken
         user.value = {
           userId: response.data.userId,
@@ -99,7 +94,6 @@ export const useAuthStore = defineStore('auth', () => {
   }
 
   return {
-    // State
     token,
     user,
     loading,

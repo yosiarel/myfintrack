@@ -237,6 +237,3 @@ export const ScrollStackItem = defineComponent({
     </div>
   </div>
 </template>
-
-<style scoped>
-</style>

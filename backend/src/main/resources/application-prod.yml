@@ -5,7 +5,8 @@
 spring:
   datasource:
     # Railway provides DATABASE_URL in format: postgresql://user:password@host:port/dbname
-    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/myfintrack}
+    # We need to add 'jdbc:' prefix for Spring Boot
+    url: jdbc:${DATABASE_URL:postgresql://localhost:5432/myfintrack}
     driver-class-name: org.postgresql.Driver
 
     hikari:
