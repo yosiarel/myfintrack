@@ -1,21 +1,9 @@
-# ================================================
-# Production Profile Configuration
-# ================================================
-
 spring:
   datasource:
-    # Railway DATABASE_URL is auto-parsed by Spring Boot R2DBC
-    # Use individual env vars instead for JDBC compatibility
-    url: jdbc:postgresql://${PGHOST:localhost}:${PGPORT:5432}/${PGDATABASE:myfintrack}
-    username: ${PGUSER:postgres}
-    password: ${PGPASSWORD:}
+    url: jdbc:postgresql://${PGHOST}:${PGPORT}/${PGDATABASE}
+    username: ${PGUSER}
+    password: ${PGPASSWORD}
     driver-class-name: org.postgresql.Driver
-
-    hikari:
-      maximum-pool-size: 20
-      minimum-idle: 10
-      connection-timeout: 30000
-      idle-timeout: 600000
 
   jpa:
     hibernate:
@@ -23,14 +11,7 @@ spring:
     show-sql: false
     properties:
       hibernate:
-        format_sql: false
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
 server:
-  port: ${SERVER_PORT:8080}
-
-logging:
-  level:
-    root: WARN
-    com.myfintrack: INFO
-    org.springframework.security: INFO
+  port: ${PORT:8080}
