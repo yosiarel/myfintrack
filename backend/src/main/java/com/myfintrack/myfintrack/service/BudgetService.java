@@ -31,12 +31,11 @@ public class BudgetService {
     public BudgetResponse createBudget(User user, BudgetRequest request) {
         Category category = categoryService.findById(request.getCategoryId());
 
-        // Only allow EXPENSE categories for budgets
+
         if (!category.getType().equals(Category.TransactionType.EXPENSE)) {
             throw new BadRequestException("Budgets can only be set for expense categories");
         }
 
-        // Check if budget already exists for this category and period
         if (budgetRepository.existsByUserIdAndCategoryIdAndMonthAndYear(
                 user.getId(), request.getCategoryId(), request.getMonth(), request.getYear())) {
             throw new BadRequestException("Budget already exists for this category and period");
